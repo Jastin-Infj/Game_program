@@ -1,0 +1,19 @@
+msg>’Êí˜g,100,‰æ‘œi”wŒij‚ð“ü‚ê‘Ö‚¦‚Ü‚·B
+img>BGImg,./data/image/GameBG–é.bmp
+msg>’Êí˜g,100,–é
+img>BGImg,./data/image/GameBG.bmp
+msg>’Êí˜g,100,“Ë‘RØ‚è‘Ö‚¦‚é‚Æˆá˜aŠ´‚ª‚ ‚éê‡A*ƒtƒF[ƒhƒAƒEƒg’†‚É“ü‚ê‘Ö‚¦‚é‚Æ—Ç‚¢‚Å‚µ‚å‚¤
+fade_io>./data/image/FadeImage.bmp
+img>BGImg,./data/image/GameBG–é.bmp
+fade_io>in
+msg>’Êí˜g,0,‚Ç‚¤‚Å‚·‚©H
+fade_io>./data/image/FadeImage.bmp
+img>BGImg,./data/image/GameBG.bmp
+fade_io>in
+msg>’Êí˜g,0,I—¹‚µ‚Ü‚·
+msg>’Êí˜g,0,off
+end>
+
+
+
+

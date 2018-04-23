@@ -1,0 +1,16 @@
+evimg>PL_A,./data/image/プレイヤ立ちえ（通常）.png,L
+msg>通常枠,100,こんにちわ世界！
+msg>通常枠,0,明日天気にしておくれ
+evimg>PL_A,off
+msg>通常枠,0,おじさんじゃねぇ、おねーさんだ！！
+evimg>PL_A,./data/image/プレイヤ立ちえ（笑う）.png,CX
+msg>通常枠,0,ぶり大根*ぶり大根*ぶり大根
+msg>通常枠,0,犯人はお前だ。
+evimg>PL_A,./data/image/プレイヤ立ちえ（怒る）.png,RXY
+msg>通常枠,0,サイン、コサイン、タングステン
+msg>通常枠,0,タコ＋イカ＝？
+msg>通常枠,0,クリーチャー
+evimg>PL_A,off
+msg>通常枠,0,これにて終了
+msg>通常枠,0,off
+end>
