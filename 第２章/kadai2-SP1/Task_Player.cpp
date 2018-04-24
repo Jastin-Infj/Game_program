@@ -103,30 +103,40 @@ namespace  Player
 			if (in.LStick.L.on) { nm = Walk; }
 			if (in.LStick.R.on) { nm = Walk; }
 			//ジャンプ
-			if (in.B1.down) { nm = Jump; }
+			if (in.B1.down) { nm = TakeOff; }
 			if (!CheckFoot()) { nm = Fall;}//足元 障害　無し
 			break;
 		case  Walk:		//歩いている
 			if (in.LStick.L.off && in.LStick.R.off) { nm = Stand; }
-			if (in.B1.down){nm = Jump;}
+			if (in.B1.down){nm = TakeOff;}
 			if (!CheckFoot()) { nm = Fall; }
 			break;
 		case  Jump:		//上昇中
-			if (CheckFoot()) { nm = Fall; } //落下中の状態にする
+			if (moveVec.y > 0) { nm = Fall; }		//上昇をしたとき
+			if (CheckFoot()) { nm = Fall; }			//地面に当たった
+			if (moveVec.y == 0) { nm = Fall; }		//天井に当たった
 			break;
 		case  Fall:		//落下中
 			///Playerが地面に立つモーションが入ります
-			if (CheckFoot()) { nm = Stand; } //Playerの状態を変化させる　足元　障害　有り
+			if (CheckFoot()) { nm = Landing; } //Playerの状態を変化させる　足元　障害　有り
 			break;
 		case  Attack:	//攻撃中
 			break;
 		case  TakeOff:	//飛び立ち
+			if (in.B1.on)
+			{
+				if (moveCnt >= 30) { nm = Jump; }
+			}
+			else if(in.B1.off){nm = Jump;}
+
+			if (!CheckFoot()) { nm = Fall; }
 			break;
 		case  Landing:	//着地
+			if (moveCnt >= 3) { nm = Stand; }
 			break;
 		}
 		//モーション更新
-		this->UpdateMotion(nm);
+		this->UpdateMotion(nm);						//モーションが切り替わる
 	}
 	//-----------------------------------------------------------------------------
 	//	モーションに対応した処理
@@ -187,12 +197,32 @@ namespace  Player
 			}
 			break;
 		case  Fall:		//落下中
+			if (in.LStick.L.on)
+			{
+				moveVec.x = -maxSpeed;
+			}
+			if (in.LStick.R.on)
+			{
+				moveVec.x = maxSpeed;
+			}
 			break;
 		case  Jump:		//上昇中
 			if (moveCnt == 0)
 			{
 				//初速の設定
-				moveVec.y = this->jumpPow;
+				moveVec.y = this->jumpPow +  -preMoveCnt/10.f;
+			}
+			if (CheckHead())				//天井に接触している
+			{
+				moveVec.y = 0;
+			}
+			if (in.LStick.L.on)
+			{
+				moveVec.x = -maxSpeed;
+			}
+			if (in.LStick.R.on)
+			{
+				moveVec.x = maxSpeed;
 			}
 			break;
 		case  Attack:	//攻撃中
@@ -230,6 +260,7 @@ namespace  Player
 			break;
 		//	落下----------------------------------------------------------------------------
 		case  Fall:		rtv = imageTable[5];	break;
+		case  TakeOff:  rtv = imageTable[6];	break;
 		}
 		//	向きに応じて画像を左右反転する
 		if (false == this->angle_LR) {

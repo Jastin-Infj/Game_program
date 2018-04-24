@@ -112,7 +112,9 @@ namespace  Player
 			if (!CheckFoot()) { nm = Fall; }
 			break;
 		case  Jump:		//上昇中
-			if (CheckFoot()) { nm = Fall; } //落下中の状態にする
+			if (moveVec.y > 0) { nm = Fall; }		//上昇をしたとき
+			if (CheckFoot()) { nm = Fall; }			//地面に当たった
+			if (moveVec.y == 0) { nm = Fall; }		//天井に当たった
 			break;
 		case  Fall:		//落下中
 			///Playerが地面に立つモーションが入ります
@@ -126,7 +128,7 @@ namespace  Player
 			break;
 		}
 		//モーション更新
-		this->UpdateMotion(nm);
+		this->UpdateMotion(nm);						//モーションが切り替わる
 	}
 	//-----------------------------------------------------------------------------
 	//	モーションに対応した処理
@@ -187,12 +189,32 @@ namespace  Player
 			}
 			break;
 		case  Fall:		//落下中
+			if (in.LStick.L.on)
+			{
+				moveVec.x = -maxSpeed;
+			}
+			if (in.LStick.R.on)
+			{
+				moveVec.x = maxSpeed;
+			}
 			break;
 		case  Jump:		//上昇中
 			if (moveCnt == 0)
 			{
 				//初速の設定
 				moveVec.y = this->jumpPow;
+			}
+			if (CheckHead())				//天井に接触している
+			{
+				moveVec.y = 0;
+			}
+			if (in.LStick.L.on)
+			{
+				moveVec.x = -maxSpeed;
+			}
+			if (in.LStick.R.on)
+			{
+				moveVec.x = maxSpeed;
 			}
 			break;
 		case  Attack:	//攻撃中
